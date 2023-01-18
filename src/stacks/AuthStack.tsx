@@ -5,7 +5,7 @@ import PreloadScreen from "../screens/PreloadScreen";
 
 const stack = createNativeStackNavigator();
 
-export default () => {
+const AuthStack: React.FC = () => {
     return (
         <stack.Navigator>
             <stack.Screen
@@ -16,3 +16,5 @@ export default () => {
         </stack.Navigator>
     );
 }
+
+export default AuthStack;

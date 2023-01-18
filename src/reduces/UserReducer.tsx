@@ -6,7 +6,23 @@ const initialState = {
     property: {}
 };
 
-export default (state = initialState, action = {}) => {
+const initialAction = {
+    type: '',
+    payload: initialState
+};
+
+type StateType = {
+    token: string,
+    user: Object,
+    property: Object
+};
+
+type ActionType = {
+    type: String,
+    payload: StateType
+};
+
+export default (state: StateType = initialState, action: ActionType = initialAction) => {
     switch(action.type) {
         case 'setToken':
             AsyncStorage.setItem('token', action.payload.token);
@@ -16,6 +32,5 @@ export default (state = initialState, action = {}) => {
         case 'setProperty':
             return {...state, property: action.payload.property};
     }
-
     return state;
 };

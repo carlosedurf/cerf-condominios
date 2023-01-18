@@ -4,7 +4,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {StateProvider} from "./src/contexts/StateContext";
 import AuthStack from "./src/stacks/AuthStack";
 
-export default () => {
+const App: React.FC = () => {
     return (
         <StateProvider>
             <NavigationContainer>
@@ -13,3 +13,5 @@ export default () => {
         </StateProvider>
     );
 };
+
+export default App;
