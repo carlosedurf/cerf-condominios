@@ -42,4 +42,16 @@ export default {
         const json = await request('post', '/auth/login', {cpf, password});
         return json;
     },
+    logout: async () => {
+        const token: string|null = await AsyncStorage.getItem('token');
+        const json = await request('post', '/auth/logout', {}, token);
+        AsyncStorage.removeItem('token');
+        return json;
+    },
+    register: async (name, email, cpf, password, password_confirm) => {
+        const json = await request('post', '/auth/register', {
+            name, email, cpf, password, password_confirm
+        });
+        return json;
+    },
 };;
