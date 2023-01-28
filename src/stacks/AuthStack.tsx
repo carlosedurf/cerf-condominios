@@ -5,6 +5,7 @@ import PreloadScreen from "../screens/PreloadScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ChoosePropertyScreen from "../screens/ChoosePropertyScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import MainDrawer from "../stacks/MainDrawer";
 
 const stack = createNativeStackNavigator();
 
@@ -35,6 +36,11 @@ const AuthStack: React.FC = () => {
                 name="RegisterScreen"
                 component={RegisterScreen}
                 options={{headerShown: true}}
+            />
+            <stack.Screen
+                name="MainDrawer"
+                component={MainDrawer}
+                options={{headerShown: false}}
             />
         </stack.Navigator>
     );
