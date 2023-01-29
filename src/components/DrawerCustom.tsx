@@ -98,7 +98,7 @@ const DrawerCustom: React.FC = (props: any) => {
     const [context, dispatch] = useStateValue();
 
     const menus: Array<MenuType> = [
-        {title: 'Mural de Aviso', icon: 'index', screen: 'WallScreen'},
+        {title: 'Mural de Aviso', icon: 'inbox', screen: 'WallScreen'},
         {title: 'Documentos', icon: 'file-text', screen: 'DocumentScreen'},
         {title: 'Reservas', icon: 'calendar', screen: 'ReservationScreen'},
         {title: 'Livro de Ocorrências', icon: 'bug', screen: 'WarningScreen'},

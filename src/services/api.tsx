@@ -24,7 +24,12 @@ const request = async (method: string, endpoint: string, params: any, token?: st
         headers.Authorization = `Bearer ${token}`;
     }
 
-    let req = await fetch(fullUrl, {method, headers, body});
+    if (method === "get") {
+        const req = await fetch(fullUrl, {method, headers});
+        const res = await req.json();
+        return res;
+    }
+    const req = await fetch(fullUrl, {method, headers, body});
     const res = await req.json();
     return res;
 };
@@ -38,7 +43,7 @@ export default {
         const json = await request('post', '/auth/validate', {}, token);
         return json;
     },
-    login: async (cpf, password) => {
+    login: async (cpf: string, password: string) => {
         const json = await request('post', '/auth/login', {cpf, password});
         return json;
     },
@@ -49,10 +54,20 @@ export default {
         AsyncStorage.removeItem('property');
         return json;
     },
-    register: async (name, email, cpf, password, password_confirm) => {
+    register: async (name: string, email: string, cpf: string, password: string, password_confirm: string) => {
         const json = await request('post', '/auth/register', {
             name, email, cpf, password, password_confirm
         });
+        return json;
+    },
+    getWall: async () => {
+        const token: any = await AsyncStorage.getItem('token');
+        const json = await request('get', '/walls', {}, token);
+        return json;
+    },
+    likeWallPost: async (id: number) => {
+        const token: any = await AsyncStorage.getItem('token');
+        const json = await request('post', `/wall/${id}/like`, {}, token);
         return json;
     },
 };;
