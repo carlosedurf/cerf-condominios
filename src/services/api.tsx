@@ -70,4 +70,9 @@ export default {
         const json = await request('post', `/wall/${id}/like`, {}, token);
         return json;
     },
+    getDocs: async (id: number) => {
+        const token: any = await AsyncStorage.getItem('token');
+        const json = await request('get', `/docs`, {}, token);
+        return json;
+    },
 };;
