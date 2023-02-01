@@ -10,7 +10,7 @@ const request = async (method: string, endpoint: string, params: any, token?: st
     switch(method) {
         case 'get':
                 const queryString = new URLSearchParams(params).toString();
-                fullUrl += `${queryString}`;
+                fullUrl += `?${queryString}`;
             break;
         case 'post':
         case 'put':
@@ -70,9 +70,18 @@ export default {
         const json = await request('post', `/wall/${id}/like`, {}, token);
         return json;
     },
-    getDocs: async (id: number) => {
+    getDocs: async () => {
         const token: any = await AsyncStorage.getItem('token');
         const json = await request('get', `/docs`, {}, token);
         return json;
     },
-};;
+    getBillets: async () => {
+        const token: any = await AsyncStorage.getItem('token');
+        let property: any = await AsyncStorage.getItem('property');
+        property = JSON.parse(property);
+        const json = await request('get', `/billets`, {
+            property: property.id
+        }, token);
+        return json;
+    },
+};
