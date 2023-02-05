@@ -93,4 +93,37 @@ export default {
         }, token);
         return json;
     },
+    addWarningFile: async (file: any) => {
+        try {
+            const token: any = await AsyncStorage.getItem('token');
+            const image = file.assets[0];
+            let formData = new FormData();
+            formData.append('photo', {
+                uri: image.uri,
+                type: image.type,
+                name: image.fileName,
+            });
+            console.log({
+                uri: image.uri,
+                type: image.type,
+                name: image.fileName,
+            });
+            console.log('------------');
+            const req = await fetch(`${baseUrl}/warning/file`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+            const json = await req.json();
+            return json;
+        } catch(ex) {
+            console.log('error');
+            console.log(ex);
+            console.log('------------');
+            return {error: 'Error'}
+        }
+    },
 };
