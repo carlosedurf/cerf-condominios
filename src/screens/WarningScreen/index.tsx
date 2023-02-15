@@ -25,6 +25,8 @@ const DocumentScreen: React.FC = () => {
             return;
         }
         setList(result.list);
+        console.log('list');
+        console.log(list);
     };
 
     useEffect(() => {

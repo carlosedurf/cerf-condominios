@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const baseUrl = 'https://api.b7web.com.br/devcond/api';
 
@@ -94,36 +95,34 @@ export default {
         return json;
     },
     addWarningFile: async (file: any) => {
-        try {
             const token: any = await AsyncStorage.getItem('token');
             const image = file.assets[0];
+            console.log(image);
             let formData = new FormData();
             formData.append('photo', {
                 uri: image.uri,
                 type: image.type,
                 name: image.fileName,
             });
-            console.log({
-                uri: image.uri,
-                type: image.type,
-                name: image.fileName,
-            });
-            console.log('------------');
-            const req = await fetch(`${baseUrl}/warning/file`, {
-                method: 'POST',
+            const req = await axios.post(`${baseUrl}/warning/file`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
-                },
-                body: formData
+                }
             });
-            const json = await req.json();
-            return json;
-        } catch(ex) {
-            console.log('error');
-            console.log(ex);
-            console.log('------------');
-            return {error: 'Error'}
-        }
+            console.log(req.data);
+            const res = req.data;
+            return res;
+    },
+    addWarning: async (title: string, list: any) => {
+        const token: any = await AsyncStorage.getItem('token');
+        let property: any = await AsyncStorage.getItem('property');
+        property = JSON.parse(property);
+        const json = await request('post', `/warning`, {
+            title,
+            list,
+            property: property.id
+        }, token);
+        return json;
     },
 };

@@ -31,16 +31,35 @@ const DocumentScreen: React.FC = () => {
             if (!response.didCancel) {
                 setLoading(true);
                 const result = await api.addWarningFile(response);
-                // if (result.error !== '') {
-                //     Alert.alert('Atenção', result.error);
-                //     return;
-                // }
-                // let list = [...photoList];
-                // list.push(result.photo);
-                // setPhotoList(list);
+                if (result.error !== '') {
+                    Alert.alert('Atenção', result.error);
+                    return;
+                }
+                let list = [...photoList];
+                list.push(result.photo);
+                setPhotoList(list);
                 setLoading(false);
             }
         });
+    };
+
+    const handleDelPhoto = (url: string) => {
+        let list = [...photoList];
+        list = list.filter(value => value !== url);
+        setPhotoList(list);
+    };
+
+    const handleSaveWarn = async () => {
+        if (warningText === '') {
+            Alert.alert('Atenção', 'Descreva a ocorrência!');
+            return;
+        }
+        const result = await api.addWarning(warningText, photoList);
+        if (result.error !== '') {
+            Alert.alert('Atenção', result.error);
+            return;
+        }
+        navigation.navigate('WarningScreen');
     };
 
     return (
@@ -61,7 +80,7 @@ const DocumentScreen: React.FC = () => {
                         {photoList.map((item, index) => (
                             <C.PhotoItem key={index}>
                                 <C.Photo source={{uri: item}} />
-                                <C.PhotoRemoveButton onPress={null}>
+                                <C.PhotoRemoveButton onPress={() => handleDelPhoto(item)}>
                                     <Icon name="remove" size={16} color="#FF0000" />
                                 </C.PhotoRemoveButton>
                             </C.PhotoItem>
@@ -73,7 +92,7 @@ const DocumentScreen: React.FC = () => {
                     <C.LoadingText>Enviando foto. Aguarde.</C.LoadingText>
                 }
 
-                <C.ButtonArea onPress={null}>
+                <C.ButtonArea onPress={handleSaveWarn}>
                     <C.ButtonText>Salvar</C.ButtonText>
                 </C.ButtonArea>
             </C.Scroller>

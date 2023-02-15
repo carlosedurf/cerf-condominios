@@ -37,7 +37,7 @@ const StatusText = styled.Text`
 `;
 
 const PhotosArea = styled.View`
-flex-direction: row;
+    flex-direction: row;
 `;
 const PhotoItem = styled.TouchableOpacity`
     margin-right: 10px;
@@ -62,14 +62,15 @@ const ModalCloseButton = styled.TouchableOpacity`
     width: 30px;
     height: 30px;
     position: absolute;
-    top: 15px
+    top: 15px;
     right: 10px;
 `;
+
 
 const WarningItem: React.FC = ({data}) => {   
 
     const [showModal, setShowModal] = useState(false);
-    const [modalIgame, setModalImage] = useState('');
+    const [modalImage, setModalImage] = useState('');
 
     const openModal = (img) => {
         setModalImage(img);
@@ -78,12 +79,12 @@ const WarningItem: React.FC = ({data}) => {
 
     return (
         <Box>
-            <Date>{data.dateCreated}</Date>
+            <Date>{data.datecreated}</Date>
             <Title>{data.title}</Title>
             <StatusArea>
-                <Icon name="index" size={24} color="#8B63E7" />
+                <Icon name="inbox" size={24} color="#8B63E7" />
                 <StatusText>
-                    {data.status === 'IN_REVIEW' && 'OCorrência em análise'}
+                    {data.status === 'IN_REVIEW' && 'Ocorrência em análise'}
                     {data.status === 'RESOLVED' && 'Resolvido'}
                 </StatusText>
             </StatusArea>
