@@ -125,4 +125,9 @@ export default {
         }, token);
         return json;
     },
+    getReservations: async () => {
+        const token: any = await AsyncStorage.getItem('token');
+        const json = await request('get', `/reservations`, {}, token);
+        return json;
+    },
 };
